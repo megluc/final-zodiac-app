@@ -29,7 +29,7 @@ export const state = {
   selectedSign: null,
 
   /** @type {Set<string>} */
-  favorites: new Set(),
+  favorites: new Set(JSON.parse(localStorage.getItem("zodiac_favorites") || "[]")),
 
   showFavorites: false,
 };
@@ -53,9 +53,7 @@ export function getFilteredSigns() {
 
 /** Signs the user has marked as favorites, in zodiac order. */
 export function getFavoritedSigns() {
-  return state.zodiacSigns
-    .map(([sign]) => sign)
-    .filter((sign) => state.favorites.has(sign));
+  return state.zodiacSigns.filter(([sign]) => state.favorites.has(sign));
 }
 
 /** Horoscope entry for the currently selected sign, or null. */

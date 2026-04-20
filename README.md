@@ -1,6 +1,6 @@
 # Horoscope Dashboard
 
-A client-side horoscope dashboard built with vanilla JavaScript ES modules. Features a zodiac sign grid, daily horoscope display, Big Three generator, compatibility checker, and favorite toggling.
+A client-side horoscope dashboard built with vanilla JavaScript ES modules. Features a zodiac sign grid, daily horoscope display, Big Three generator, compatibility checker, favorites toggling with persistence, and sign search.
 
 ## How to Run
 
@@ -10,16 +10,15 @@ python3 -m http.server 4040
 
 Open: http://localhost:4040
 
-
 ## Module Map
 
 | File | Responsibility |
 |---|---|
-| `data.js` | Exported data constants (zodiac signs, horoscope data, compatibility data, moon/rising sign arrays) |
-| `dom.js` | Centralized element references |
-| `state.js` | Single state object and selector functions |
+| `data.json` | All app data — zodiac sign date ranges, horoscope entries, compatibility pairs, moon/rising sign arrays |
+| `dom.js` | Centralized DOM element references |
+| `state.js` | Single state object and pure selector functions |
 | `api.js` | Async data loading with resilience patterns |
-| `render.js` | Orchestrates all DOM updates using selectors |
+| `render.js` | Orchestrates all DOM updates |
 | `main.js` | Bootstraps app, wires event listeners |
 | `components/ZodiacGrid.js` | Self-contained zodiac grid component |
 
@@ -36,60 +35,22 @@ Open: http://localhost:4040
 
 ## UI States
 
-The application implements all four required UI states:
+- **Loading** — spinner message shown in grid while `data.json` is being fetched
+- **Error** — user-friendly error message with a Retry button that re-triggers the load without a page refresh
+- **Empty** — "No signs match…" message when search returns zero results
+- **Success** — zodiac grid, horoscope box, and all controls rendered
 
-- **Loading**  
-  When `state.loadStatus === "loading"`, the app displays a loading message in the grid area while data is being fetched.
+## Features
 
-- **Error**  
-  When `state.loadStatus === "error"`, a user-friendly error message is displayed along with a **Retry button** that re-triggers the data load without refreshing the page.
+- Zodiac sign grid with live search filtering
+- Daily horoscope display (reading, mood, lucky color, lucky number, moon phase)
+- Favorites toggling with heart icons — persisted to `localStorage` across page refreshes
+- Big Three generator (Sun sign by date range; Moon and Rising are approximate)
+- Compatibility checker with individual scores for all 66 sign pairs (love, friendship, communication)
 
-- **Empty**  
-  When no zodiac signs match the search query, a message is displayed:
-  `"No signs match your search."`
+## Resilience Patterns (api.js)
 
-- **Success**  
-  When data loads successfully, the zodiac grid and horoscope data are rendered.
-
-## Resilience Patterns
-
-Implemented in `api.js`:
-
-- **Timeout (AbortController)**  
-  Automatically cancels requests after 8 seconds
-
-- **Stale-request cancellation**  
-  Previous in-flight requests are aborted when a new request starts
-
-- **Structured error messages**  
-  Different messages are shown for:
-  - timeout
-  - stale requests
-  - network errors
-  - HTTP errors
-  - parse errors
-  - validation errors
-
-- **Data validation**  
-  Ensures both the top-level JSON structure and all horoscope entries contain the required fields
-
-## Current Feature Status
-
-**Working:**
-- Zodiac sign grid with search filtering
-- Daily horoscope display
-- Favorite toggling
-- Big Three generator
-- Compatibility checker
-- All four UI states
-- Real `fetch()` loading from `data.json`
-
-**Needs improvement:**
-- No filter-by-favorites button yet
-- Compatibility data currently only includes a default fallback pairing
-- Big Three moon and rising calculations use a simplified formula
-- More sign-specific compatibility data can be added in the future
-
-  
-
-  
+- **Timeout** — requests are automatically cancelled after 8 seconds via `AbortController`
+- **Stale-request cancellation** — a new load aborts any previous in-flight request
+- **Structured error messages** — distinct messages for timeout, stale, network, HTTP, parse, and validation failures
+- **Data validation** — top-level JSON shape and all horoscope entries are validated before state is updated
