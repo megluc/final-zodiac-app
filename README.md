@@ -74,4 +74,4 @@ Open: http://localhost:4040
 
 ## Deployed URL
 
-[!!!paste URL here]
+https://megluc.github.io/final-zodiac-app/
