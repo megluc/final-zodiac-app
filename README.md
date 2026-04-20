@@ -1,6 +1,7 @@
 # Horoscope Dashboard
 
-A client-side horoscope dashboard built with vanilla JavaScript ES modules. Features a zodiac sign grid, daily horoscope display, Big Three generator, compatibility checker, favorites toggling with persistence, and sign search.
+A client-side horoscope dashboard built with vanilla JavaScript ES modules, using a locally fetched JSON data source. Features a zodiac sign grid, daily horoscope display, Big Three generator, compatibility checker, favorites toggling with persistence, and sign search.
+
 
 ## How to Run
 
@@ -61,7 +62,6 @@ Open: http://localhost:4040
 - Categories covered: success, edge, and failure
 - Features covered: zodiac grid / horoscope, Big Three generator, compatibility checker, favorites, search/filter, responsive layout
 - Bugs fixed: 5
-- Pass rate: update this after your final re-run
 
 **all 14 test cases now pass after the fixes** |
 **Pass rate: 14/14 (100%)**
