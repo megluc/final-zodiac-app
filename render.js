@@ -127,15 +127,19 @@ function _mountGrid(signs) {
       _updateHoroscopeBox();
     },
     onToggleFavorite(sign) {
-      if (state.favorites.has(sign)) {
-        state.favorites.delete(sign);
-      } else {
-        state.favorites.add(sign);
-      }
-      localStorage.setItem("zodiac_favorites", JSON.stringify([...state.favorites]));
-      // Only the grid needs to re-paint; boxes and selects are unaffected.
-      _mountGrid(getFilteredSigns());
-    },
+  if (state.favorites.has(sign)) {
+    state.favorites.delete(sign);
+  } else {
+    state.favorites.add(sign);
+  }
+
+  localStorage.setItem(
+    "favorites",
+    JSON.stringify([...state.favorites])
+  );
+
+  _mountGrid(getFilteredSigns());
+},
   });
 }
 

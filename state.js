@@ -29,7 +29,7 @@ export const state = {
   selectedSign: null,
 
   /** @type {Set<string>} */
-  favorites: new Set(JSON.parse(localStorage.getItem("zodiac_favorites") || "[]")),
+  favorites: new Set(JSON.parse(localStorage.getItem("favorites") || "[]")),
 
   showFavorites: false,
 };
