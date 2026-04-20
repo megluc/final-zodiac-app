@@ -126,6 +126,9 @@
       display: inline-block;
       transition: color 0.2s;
       user-select: none;
+      background: transparent;
+      border: none;
+      padding: 4px 8px;
     }
 
     .heart:hover { color: #7a6f9a; }
@@ -228,6 +231,11 @@
       h1 { font-size: 1.5rem; }
       .container { padding: 28px 16px; }
       .box { font-size: 0.9rem; padding: 16px; }
+    }
+
+    button:focus-visible {
+      outline: 3px solid #ff7ac6;
+      outline-offset: 2px;
     }
   </style>
 </head>

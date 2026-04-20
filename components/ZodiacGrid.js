@@ -16,20 +16,35 @@
  *   onToggleFavorite: (sign: string) => void,
  * }} props
  */
-export function mountZodiacGrid(container, { signs, favorites, onSelectSign, onToggleFavorite }) {
+export function mountZodiacGrid(
+  container,
+  { signs, favorites, onSelectSign, onToggleFavorite }
+) {
   const cards = signs.map(([sign]) => {
     const card = document.createElement("div");
     card.className = "card";
 
     const btn = document.createElement("button");
+    btn.type = "button";
     btn.textContent = sign;
     btn.addEventListener("click", () => onSelectSign(sign));
 
     const isFav = favorites.has(sign);
-    const heart = document.createElement("div");
+
+    const heart = document.createElement("button");
+    heart.type = "button";
     heart.className = isFav ? "heart favorited" : "heart";
     heart.textContent = isFav ? "♥" : "♡";
-    heart.addEventListener("click", () => onToggleFavorite(sign));
+    heart.setAttribute(
+      "aria-label",
+      isFav ? `Unfavorite ${sign}` : `Favorite ${sign}`
+    );
+
+    heart.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onToggleFavorite(sign);
+    });
 
     card.appendChild(btn);
     card.appendChild(heart);
