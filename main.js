@@ -35,6 +35,7 @@ dom.favoritesBtn?.addEventListener("click", () => {
 
 dom.searchInput.addEventListener("input", (e) => {
   state.query = e.target.value;
+  state.showFavorites = false;
   renderApp();
 });
 
@@ -48,6 +49,19 @@ dom.bigThreeBtn?.addEventListener("click", () => {
     return;
   }
 
+  if (month < 1 || month > 12) {
+    dom.bigThreeBox.textContent = "Month must be between 1 and 12.";
+    return;
+  }
+  if (day < 1 || day > 31) {
+    dom.bigThreeBox.textContent = "Day must be between 1 and 31.";
+    return;
+  }
+  if (hour < 0 || hour > 23) {
+    dom.bigThreeBox.textContent = "Hour must be between 0 and 23.";
+    return;
+  }
+
   renderBigThree(getBigThree(month, day, hour));
 });
 
@@ -57,6 +71,11 @@ dom.compatBtn?.addEventListener("click", () => {
 
   if (!sign1 || !sign2) {
     dom.compatBox.textContent = "Please select two signs to compare.";
+    return;
+  }
+
+  if (sign1 === sign2) {
+    dom.compatBox.textContent = "Please select two different signs to compare.";
     return;
   }
 

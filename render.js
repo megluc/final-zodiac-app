@@ -54,7 +54,7 @@ export function renderApp({ onRetry } = {}) {
  */
 export function renderBigThree({ sun, moon, rising }) {
   dom.bigThreeBox.textContent =
-    `Big Three Results\n\nSun Sign: ${sun}\nMoon Sign: ${moon}\nRising Sign: ${rising}\n\nChange the birth hour and generate again to see the rising sign update.`;
+    `Big Three Results\n\nSun Sign: ${sun}\nMoon Sign (approximate): ${moon}\nRising Sign (approximate): ${rising}\n\nChange the birth hour and generate again to see the rising sign update.`;
 }
 
 /**
@@ -90,13 +90,15 @@ function _renderError() {
   msg.textContent = state.errorMessage || "An unknown error occurred.";
   msg.style.color = "#ff7ac6";
 
-  const btn = document.createElement("button");
-  btn.className = "pink-btn";
-  btn.textContent = "Retry";
-  if (_onRetry) btn.addEventListener("click", _onRetry);
-
   wrapper.appendChild(msg);
-  wrapper.appendChild(btn);
+
+  if (_onRetry) {
+    const btn = document.createElement("button");
+    btn.className = "pink-btn";
+    btn.textContent = "Retry";
+    btn.addEventListener("click", _onRetry);
+    wrapper.appendChild(btn);
+  }
   dom.zodiacGrid.replaceChildren(wrapper);
   dom.horoscopeBox.textContent = "";
 }
@@ -130,6 +132,7 @@ function _mountGrid(signs) {
       } else {
         state.favorites.add(sign);
       }
+      localStorage.setItem("zodiac_favorites", JSON.stringify([...state.favorites]));
       // Only the grid needs to re-paint; boxes and selects are unaffected.
       _mountGrid(getFilteredSigns());
     },
