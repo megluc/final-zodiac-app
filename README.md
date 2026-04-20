@@ -63,7 +63,7 @@ Open: http://localhost:4040
 - Bugs fixed: 5
 - Pass rate: update this after your final re-run
 
-**all 14 test cases now pass after the fixes**
+**all 14 test cases now pass after the fixes** |
 **Pass rate: 14/14 (100%)**
 
 ## Known Issues / Limitations
